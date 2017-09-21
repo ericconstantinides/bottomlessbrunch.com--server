@@ -11,13 +11,11 @@ const RegionSchema = new Schema({
   name: {
     type: String,
     unique: true,
-    required: true,
-    trim: true
+    required: true
   },
   slug: {
     type: String,
     unique: true,
-    trim: true,
     lowercase: true
   },
   zoom: {
