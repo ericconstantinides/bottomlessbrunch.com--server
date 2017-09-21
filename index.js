@@ -7,13 +7,16 @@ const router = require('./router')
 const mongoose = require('mongoose')
 const cors = require('cors')
 
+const PORT = 3090
+const DATABASE = 'bottomless_brunch'
+
 // Use native Node promises
 mongoose.Promise = global.Promise
 
 // DB Setup
 // Creates a new database called "auth"
-mongoose.connect('mongodb://localhost/auth', { useMongoClient: true })
-  .then(() => console.log('connection to erics-node-todo db succesful'))
+mongoose.connect(`mongodb://localhost/${DATABASE}`, { useMongoClient: true })
+  .then(() => console.log(`connection to ${DATABASE} succesful`))
   .catch((err) => console.error(err))
 
 // App Setup
@@ -23,7 +26,7 @@ app.use(bodyParser.json({ type: '*/*' }))
 router(app)
 
 // Server Setup
-const port = process.env.PORT || 3090
+const finalPort = process.env.PORT || PORT
 const server = http.createServer(app)
-server.listen(port)
-console.log('Server listening on: ', port)
+server.listen(finalPort)
+console.log('Server listening on: ', finalPort)
