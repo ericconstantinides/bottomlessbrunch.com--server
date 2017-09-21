@@ -5,25 +5,28 @@ const Schema = mongoose.Schema
 const RegionSchema = new Schema({
   id: {
     type: Number,
-    unique: true
+    unique: true,
+    required: true
   },
   name: {
     type: String,
-    unique: true
+    unique: true,
+    required: true,
+    trim: true
   },
   slug: {
     type: String,
     unique: true,
+    trim: true,
     lowercase: true
   },
   zoom: {
-    type: Number
+    type: Number,
+    min: 0
   },
-  lat: {
-    type: Number
-  },
-  lng: {
-    type: Number
+  position: {
+    lat: Number,
+    lng: Number
   }
 })
 
