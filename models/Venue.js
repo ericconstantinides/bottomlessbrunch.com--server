@@ -35,8 +35,8 @@ const VenueSchema = new Schema({
   }],
   hours: [{
     category: { enum: enumerables.timeCategories },
-    starts: { enum: enumerables.time },
-    ends: { enum: enumerables.time },
+    starts: { enum: enumerables.times },
+    ends: { enum: enumerables.times },
     days: [{ enum: enumerables.weekdays }]
   }],
   menuItems: [{

@@ -3,30 +3,31 @@ const http = require('http')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const app = express()
-const router = require('./router')
 const mongoose = require('mongoose')
 const cors = require('cors')
 
-const PORT = 3090
-const DATABASE = 'bottomless_brunch'
+const config = require('./config')
 
 // Use native Node promises
 mongoose.Promise = global.Promise
-
-// DB Setup
-// Creates a new database called "auth"
-mongoose.connect(`mongodb://localhost/${DATABASE}`, { useMongoClient: true })
-  .then(() => console.log(`connection to ${DATABASE} succesful`))
-  .catch((err) => console.error(err))
+mongoose
+  .connect(`mongodb://localhost/${config.DATABASE}`, { useMongoClient: true })
+  .then(() => console.log(`connection to ${config.DATABASE} succesful`))
+  .catch(err => console.error(err))
 
 // App Setup
 app.use(morgan('combined'))
 app.use(cors()) // cors middleware
 app.use(bodyParser.json({ type: '*/*' }))
-router(app)
+
+// importing route
+const routes = require('./routes')
+
+// register the route
+app.use('/api/v1', routes)
 
 // Server Setup
-const finalPort = process.env.PORT || PORT
+const PORT = process.env.PORT || config.PORT
 const server = http.createServer(app)
-server.listen(finalPort)
-console.log('Server listening on: ', finalPort)
+server.listen(PORT)
+console.log('Server listening on:', PORT)
