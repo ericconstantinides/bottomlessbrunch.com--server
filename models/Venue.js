@@ -3,11 +3,6 @@ const Schema = mongoose.Schema
 const enumerables = require('../enumerables')
 
 const VenueSchema = new Schema({
-  id: {
-    type: Number,
-    unique: true,
-    required: true
-  },
   name: {
     type: String,
     required: true
@@ -16,15 +11,21 @@ const VenueSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Region'
   },
-  neighborhood: {
-    type: String
-  },
+  neighborhood: String,
   position: {
     lat: Number,
     lng: Number
   },
   googlePlacesId: {
     type: String,
+    unique: true
+  },
+  yelpId: {
+    type: String,
+    unique: true
+  },
+  zomatoId: {
+    type: Number,
     unique: true
   },
   images: [{
@@ -34,10 +35,22 @@ const VenueSchema = new Schema({
     width: Number
   }],
   hours: [{
-    category: { enum: enumerables.timeCategories },
-    starts: { enum: enumerables.times },
-    ends: { enum: enumerables.times },
-    days: [{ enum: enumerables.weekdays }]
+    category: {
+      type: String,
+      enum: enumerables.timeCategories
+    },
+    startTime: {
+      type: String,
+      enum: enumerables.times
+    },
+    endTime: {
+      type: String,
+      enum: enumerables.times
+    },
+    days: [{
+      type: String,
+      enum: enumerables.days
+    }]
   }],
   menuItems: [{
     name: String,
@@ -52,7 +65,8 @@ const VenueSchema = new Schema({
     tripAdvisor: String,
     zagat: String,
     zomato: String
-  }
+  },
+  researchNotes: String
 })
 
 module.exports = mongoose.model('Venue', VenueSchema)
