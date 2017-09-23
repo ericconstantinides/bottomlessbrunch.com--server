@@ -12,10 +12,6 @@ const VenueSchema = new Schema({
     ref: 'Region'
   },
   neighborhood: String,
-  position: {
-    lat: Number,
-    lng: Number
-  },
   googlePlacesId: {
     type: String,
     unique: true
@@ -28,12 +24,12 @@ const VenueSchema = new Schema({
     type: Number,
     unique: true
   },
-  images: [{
-    fileName: String,
-    type: String,
-    height: Number,
-    width: Number
-  }],
+  fullBar: Boolean,
+  researchNotes: String,
+  position: {
+    lat: Number,
+    lng: Number
+  },
   hours: [{
     category: {
       type: String,
@@ -52,11 +48,16 @@ const VenueSchema = new Schema({
       enum: enumerables.days
     }]
   }],
+  images: [{
+    fileName: String,
+    fileType: String,
+    height: Number,
+    width: Number
+  }],
   menuItems: [{
     name: String,
     price: Number
   }],
-  fullBar: Boolean,
   links: {
     website: String,
     facebook: String,
@@ -65,8 +66,7 @@ const VenueSchema = new Schema({
     tripAdvisor: String,
     zagat: String,
     zomato: String
-  },
-  researchNotes: String
+  }
 })
 
 module.exports = mongoose.model('Venue', VenueSchema)
