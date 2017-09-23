@@ -50,7 +50,7 @@ const VenueSchema = new Schema({
   }],
   images: [{
     fileName: String,
-    fileType: String,
+    category: String,
     height: Number,
     width: Number
   }],
