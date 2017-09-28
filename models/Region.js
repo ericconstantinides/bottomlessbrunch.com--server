@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+const enumerables = require('../enumerables')
 
 // Define our model
 const RegionSchema = new Schema({
@@ -13,6 +14,10 @@ const RegionSchema = new Schema({
     unique: true,
     lowercase: true
   },
+  state: {
+    type: String,
+    enum: enumerables.states
+  },
   zoom: {
     type: Number,
     min: 0
@@ -20,6 +25,10 @@ const RegionSchema = new Schema({
   position: {
     lat: Number,
     lng: Number
+  },
+  googlePlacesId: {
+    type: String,
+    unique: true
   }
 })
 
