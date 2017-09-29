@@ -14,29 +14,34 @@ exports.venue_list = function (req, res) {
 exports.venue_create = function (req, res) {
   const newVenue = new Venue(req.body)
   if (newVenue.googlePlacesId || newVenue.yId) {
+    const fetchedTime = new Date()
     if (newVenue.googlePlacesId) {
-      axios.get(`${G_BASE_URL}?placeid=${newVenue.googlePlacesId}&key=${API_KEY}`).then(res => {
-        const gData = res.data.result
-        newVenue.gMetaData = gData
-        // derive the gData:
-        newVenue.position.lat = gData.geometry.location.lat // yes
-        newVenue.position.lng = gData.geometry.location.lng // yes
-        newVenue.phone = gData.formatted_phone_number // yes
-        newVenue.website = gData.website // yes
-        newVenue.address = gData.adr_address // yes
-        newVenue.neighborhood = gData.address_components[2].long_name // no
-        // crappy way of making sure that either yData or gData are both done
-        if (newVenue.yMetaData) {
-          newVenue.save(function (err, venue) {
-            if (err) res.send(err)
-            res.json(venue)
-          })
-        }
-      })
+      axios
+        .get(`${G_BASE_URL}?placeid=${newVenue.googlePlacesId}&key=${API_KEY}`)
+        .then(res => {
+          const gData = res.data.result
+          newVenue.gMetaData = gData
+          newVenue.gMetaData.fetchedTime = fetchedTime
+          // derive the gData:
+          newVenue.position.lat = gData.geometry.location.lat
+          newVenue.position.lng = gData.geometry.location.lng
+          newVenue.phone = gData.formatted_phone_number
+          newVenue.website = gData.website
+          newVenue.address = gData.adr_address
+          newVenue.neighborhood = gData.address_components[2].long_name
+          // crappy way of making sure that either yData or gData are both done
+          if (newVenue.yMetaData) {
+            newVenue.save(function (err, venue) {
+              if (err) res.send(err)
+              res.json(venue)
+            })
+          }
+        })
     }
     if (newVenue.yId) {
       yParser(newVenue.yId, yMetaData => {
         newVenue.yMetaData = yMetaData
+        newVenue.yMetaData.fetchedTime = fetchedTime
         // crappy way of making sure that either yData or gData are both done
         if (newVenue.gMetaData) {
           newVenue.save(function (err, venue) {
