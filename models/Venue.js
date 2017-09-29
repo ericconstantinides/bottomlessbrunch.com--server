@@ -5,10 +5,10 @@ const enumerables = require('../enumerables')
 const VenueSchema = new Schema({
   name: { type: String, required: true },
   region: { type: Schema.Types.ObjectId, ref: 'Region' },
-  gId: { type: String, unique: true },
+  gpId: { type: String, unique: true },
   yId: { type: String, unique: true },
   zomatoId: Number,
-  updated: Date,
+  updated: [ Date ],
   created: Date,
   neighborhood: String,
   yMeta: Object,

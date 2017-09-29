@@ -13,11 +13,11 @@ exports.venue_list = function (req, res) {
 
 exports.venue_create = function (req, res) {
   const newVenue = new Venue(req.body)
-  if (newVenue.googlePlacesId || newVenue.yId) {
+  if (newVenue.gpId || newVenue.yId) {
     const fetchedTime = new Date()
-    if (newVenue.googlePlacesId) {
+    if (newVenue.gpId) {
       axios
-        .get(`${G_BASE_URL}?placeid=${newVenue.googlePlacesId}&key=${API_KEY}`)
+        .get(`${G_BASE_URL}?placeid=${newVenue.gpId}&key=${API_KEY}`)
         .then(res => {
           const gData = res.data.result
           newVenue.gMetaData = gData
