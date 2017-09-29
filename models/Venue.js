@@ -21,9 +21,12 @@ const VenueSchema = new Schema({
     unique: true
   },
   yMetaData: Object,
+  gMetaData: Object,
   zomatoId: Number,
   fullBar: Boolean,
   researchNotes: String,
+  phone: String,
+  address: String,
   position: {
     lat: Number,
     lng: Number
@@ -56,8 +59,8 @@ const VenueSchema = new Schema({
     name: String,
     price: Number
   }],
+  website: String,
   links: {
-    website: String,
     facebook: String,
     yelp: String,
     openTable: String,
