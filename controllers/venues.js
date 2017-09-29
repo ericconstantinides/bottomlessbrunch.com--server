@@ -20,17 +20,23 @@ exports.venue_create = function (req, res) {
         .get(`${G_BASE_URL}?placeid=${newVenue.gpId}&key=${API_KEY}`)
         .then(res => {
           const gData = res.data.result
-          newVenue.gMetaData = gData
-          newVenue.gMetaData.fetchedTime = fetchedTime
+          newVenue.gData = gData
+          newVenue.gData.fetchedTime = fetchedTime
           // derive the gData:
-          newVenue.position.lat = gData.geometry.location.lat
-          newVenue.position.lng = gData.geometry.location.lng
+          newVenue.lat = gData.geometry.location.lat
+          newVenue.lng = gData.geometry.location.lng
           newVenue.phone = gData.formatted_phone_number
           newVenue.website = gData.website
-          newVenue.address = gData.adr_address
+          newVenue.address.street =
+            gData.address_components[0].short_name +
+            ' ' +
+            gData.address_components[1].short_name
+          newVenue.address.city = gData.address_components[3].short_name
+          newVenue.address.state = gData.address_components[5].short_name
+          newVenue.address.zip = gData.address_components[7].short_name
           newVenue.neighborhood = gData.address_components[2].long_name
           // crappy way of making sure that either yData or gData are both done
-          if (newVenue.yMetaData) {
+          if (newVenue.yData) {
             newVenue.save(function (err, venue) {
               if (err) res.send(err)
               res.json(venue)
@@ -39,11 +45,11 @@ exports.venue_create = function (req, res) {
         })
     }
     if (newVenue.yId) {
-      yParser(newVenue.yId, yMetaData => {
-        newVenue.yMetaData = yMetaData
-        newVenue.yMetaData.fetchedTime = fetchedTime
+      yParser(newVenue.yId, yData => {
+        newVenue.yData = yData
+        newVenue.yData.fetchedTime = fetchedTime
         // crappy way of making sure that either yData or gData are both done
-        if (newVenue.gMetaData) {
+        if (newVenue.gData) {
           newVenue.save(function (err, venue) {
             if (err) res.send(err)
             res.json(venue)
