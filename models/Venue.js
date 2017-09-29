@@ -21,10 +21,7 @@ const VenueSchema = new Schema({
     unique: true
   },
   yMetaData: Object,
-  zomatoId: {
-    type: Number,
-    unique: true
-  },
+  zomatoId: Number,
   fullBar: Boolean,
   researchNotes: String,
   position: {

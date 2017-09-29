@@ -10,25 +10,26 @@ exports.venue_list = function (req, res) {
 
 exports.venue_create = function (req, res) {
   const newVenue = new Venue(req.body)
-  newVenue.save(function (err, venue) {
-    if (err) res.send(err)
-    res.json(venue)
-  })
+  if (newVenue.yId) {
+    yParser(newVenue.yId, yMetaData => {
+      newVenue.yMetaData = yMetaData
+      newVenue.save(function (err, venue) {
+        if (err) res.send(err)
+        res.json(venue)
+      })
+    })
+  } else {
+    newVenue.save(function (err, venue) {
+      if (err) res.send(err)
+      res.json(venue)
+    })
+  }
 }
 
 exports.venue_detail = function (req, res) {
   Venue.findById(req.params.venueId, function (err, venue) {
     if (err) res.send(err)
-    // TEMPORARY putting it in the get. Will probably move back to create
-    // here is where we can use crawler for additional data:
-    if (venue.yId) {
-      yParser(venue.yId, yMetaData => {
-        console.log(yMetaData)
-        venue.yMetaData = yMetaData
-        venue.testing = 'good testing'
-        res.json(venue)
-      })
-    }
+    res.json(venue)
   })
 }
 

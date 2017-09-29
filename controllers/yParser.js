@@ -14,12 +14,15 @@ module.exports = function (yId, postCallback) {
         // $ is Cheerio by default
         // a lean implementation of core jQuery designed specifically for the server
         const yObj = {}
+        yObj.fetchedTime = new Date()
         $('.bordered-rail .ylist .short-def-list dl').each((i, item) => {
           const q = myHelpers.camelize(
-            sanitizeHtml($(item).find('dt').text()).trim()
+            sanitizeHtml($(item).find('dt').text())
+              .trim()
           )
-          const a = myHelpers.booleanOrString(
-            sanitizeHtml($(item).find('dd').text()).trim()
+          const a = myHelpers.booleanArrayOrString(
+            sanitizeHtml($(item).find('dd').text())
+              .trim()
           )
           yObj[q] = a
         })
