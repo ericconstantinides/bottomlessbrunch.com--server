@@ -31,7 +31,7 @@ exports.venue_create = function (req, res) {
             gData.address_components[0].short_name +
             ' ' +
             gData.address_components[1].short_name
-          newVenue.address.city = gData.address_components[3].short_name
+          newVenue.address.city = gData.address_components[3].long_name
           newVenue.address.state = gData.address_components[5].short_name
           newVenue.address.zip = gData.address_components[7].short_name
           newVenue.neighborhood = gData.address_components[2].long_name
