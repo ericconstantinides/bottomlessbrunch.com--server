@@ -1,4 +1,5 @@
 const Venue = require('../models/Venue')
+const yParser = require('./yParser')
 
 exports.venue_list = function (req, res) {
   Venue.find({}, function (err, venue) {
@@ -18,7 +19,16 @@ exports.venue_create = function (req, res) {
 exports.venue_detail = function (req, res) {
   Venue.findById(req.params.venueId, function (err, venue) {
     if (err) res.send(err)
-    res.json(venue)
+    // TEMPORARY putting it in the get. Will probably move back to create
+    // here is where we can use crawler for additional data:
+    if (venue.yId) {
+      yParser(venue.yId, yMetaData => {
+        console.log(yMetaData)
+        venue.yMetaData = yMetaData
+        venue.testing = 'good testing'
+        res.json(venue)
+      })
+    }
   })
 }
 

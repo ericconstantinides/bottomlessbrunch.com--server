@@ -16,10 +16,11 @@ const VenueSchema = new Schema({
     type: String,
     unique: true
   },
-  yelpId: {
+  yId: {
     type: String,
     unique: true
   },
+  yMetaData: Object,
   zomatoId: {
     type: Number,
     unique: true
