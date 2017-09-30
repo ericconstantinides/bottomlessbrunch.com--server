@@ -4,6 +4,7 @@ const enumerables = require('../enumerables')
 
 const VenueSchema = new Schema({
   name: { type: String, required: true },
+  active: { type: Boolean, default: true },
   regionId: { type: Schema.Types.ObjectId, ref: 'Region' },
   gpId: { type: String, unique: true },
   yId: { type: String, unique: true },
