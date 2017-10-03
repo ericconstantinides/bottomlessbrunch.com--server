@@ -22,6 +22,7 @@ const VenueSchema = new Schema({
     zip: Number
   },
   phone: String,
+  globalPhone: String,
   lat: Number,
   lng: Number,
   funTimes: [{
