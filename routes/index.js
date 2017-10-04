@@ -3,6 +3,7 @@ const router = express.Router()
 
 const venues = require('../controllers/venues')
 const regions = require('../controllers/regions')
+const methods = require('../controllers/methods')
 
 router.route('/regions')
   .get(regions.region_list)
@@ -21,5 +22,8 @@ router.route('/venues/:venueId')
   .get(venues.venue_detail)
   .put(venues.venue_update)
   .delete(venues.venue_delete)
+
+router.route('/methods/yelpPhoneSearch')
+  .get(methods.yelp_phone_search)
 
 module.exports = router
