@@ -1,5 +1,7 @@
 const Yelp = require('node-yelp-api-v3')
 const config = require('../config')
+const yParser = require('./yParser')
+
 const {
   CLIENT_ID: consumer_key,
   CLIENT_SECRET: consumer_secret
@@ -24,4 +26,8 @@ exports.yelp_id_search = function (req, res) {
     // const filtered = result.businesses.filter(venue => !venue.is_closed)
     res.json(result)
   })
+}
+
+exports.yelp_meta_search = function (req, res) {
+  yParser(req.query.id, yMeta => res.json(yMeta))
 }

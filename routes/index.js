@@ -25,5 +25,6 @@ router.route('/venues/:venueId')
 
 router.route('/methods/yelpPhoneSearch').get(methods.yelp_phone_search)
 router.route('/methods/yelpIdSearch').get(methods.yelp_id_search)
+router.route('/methods/yelpMetaSearch').get(methods.yelp_meta_search)
 
 module.exports = router

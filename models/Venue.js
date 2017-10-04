@@ -12,6 +12,7 @@ const VenueSchema = new Schema({
   updated: [ Date ],
   created: Date,
   neighborhood: String,
+  yMeta: Object,
   yData: Object,
   gData: Object,
   fullBar: Boolean,
