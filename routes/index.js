@@ -23,7 +23,7 @@ router.route('/venues/:venueId')
   .put(venues.venue_update)
   .delete(venues.venue_delete)
 
-router.route('/methods/yelpPhoneSearch')
-  .get(methods.yelp_phone_search)
+router.route('/methods/yelpPhoneSearch').get(methods.yelp_phone_search)
+router.route('/methods/yelpIdSearch').get(methods.yelp_id_search)
 
 module.exports = router
