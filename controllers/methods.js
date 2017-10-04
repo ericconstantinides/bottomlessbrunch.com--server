@@ -8,8 +8,8 @@ const {
 const yelp = new Yelp({ consumer_key, consumer_secret })
 
 exports.yelp_phone_search = function (req, res) {
-  const { number } = req.query
-  const phoneNumber = decodeURI(number)
+  const { phone } = req.query
+  const phoneNumber = decodeURI(phone)
   yelp.searchBusinessPhone(phoneNumber)
     .then(result => res.json(result))
 }
