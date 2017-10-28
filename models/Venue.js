@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const enumerables = require('../enumerables')
+const enumerables = require('../lib/enumerables')
 
 const VenueSchema = new Schema({
   name: { type: String, required: true },
