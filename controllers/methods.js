@@ -30,3 +30,7 @@ exports.yelp_id_search = function (req, res) {
 exports.yelp_meta_search = function (req, res) {
   yParser(req.query.id, yMeta => res.json(yMeta))
 }
+
+exports.environment = function (req, res) {
+  res.json({environment: process.env.ENVIRONMENT})
+}
