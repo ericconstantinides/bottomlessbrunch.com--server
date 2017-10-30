@@ -12,14 +12,10 @@ const DB_USER = process.env.DB_USER
 const DB_PWD = process.env.DB_PASSWORD
 const DB_SRVR = process.env.DB_SERVER
 
-// Use native Node promises
-mongoose.Promise = global.Promise
 mongoose
   .connect(`mongodb://${DB_USER}:${DB_PWD}@${DB_SRVR}/${DB}`, {
     useMongoClient: true
   })
-  .then(() => console.log(`connection to ${DB} succesful`))
-  .catch(err => console.error(err))
 
 // App Setup
 app.use(morgan('combined'))
