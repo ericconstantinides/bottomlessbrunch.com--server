@@ -7,15 +7,16 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 
 require('dotenv').config()
-const DB = process.env.DATABASE
-const DB_USER = process.env.DB_USER
-const DB_PWD = process.env.DB_PASSWORD
-const DB_SRVR = process.env.DB_SERVER
 
-mongoose
-  .connect(`mongodb://${DB_USER}:${DB_PWD}@${DB_SRVR}/${DB}`, {
-    useMongoClient: true
-  })
+const MONGODB_URI = process.env.ENVIRONMENT === 'prod'
+  ? process.env.MONGODB_PROD_URI
+  : process.env.ENVIRONMENT === 'dev'
+    ? process.env.MONGODB_DEV_URI
+    : ''
+
+mongoose.connect(MONGODB_URI, {
+  useMongoClient: true
+})
 
 // App Setup
 app.use(morgan('combined'))
@@ -36,4 +37,4 @@ app.use('/api/v1', routes)
 const PORT = process.env.PORT || 3000
 const server = http.createServer(app)
 server.listen(PORT)
-console.log('Server listening on:', PORT)
+console.log(`${process.env.ENVIRONMENT} Server listening on port ${PORT}`)
