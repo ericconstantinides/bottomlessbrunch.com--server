@@ -20,11 +20,15 @@ app.use(morgan('combined'))
 app.use(cors()) // cors middleware
 app.use(bodyParser.json({ type: '*/*' }))
 
-// importing route
+// importing routes
 const routes = require('./routes')
+// NOT YET:
+// const authRoutes = require('./routes/authRoutes')
 
 // register the route
 app.use('/api/v1', routes)
+// NOT YET:
+// app.use('/', authRoutes)
 
 // Server Setup
 const PORT = process.env.PORT || config.PORT
