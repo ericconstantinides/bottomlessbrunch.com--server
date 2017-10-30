@@ -1,7 +1,7 @@
 module.exports = {
   apps: [{
     name: 'bottomlessbrunch.com--server',
-    script: 'npm run server.js'
+    script: './server.js'
   }],
   deploy: {
     production: {
