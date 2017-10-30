@@ -6,13 +6,13 @@ const app = express()
 const mongoose = require('mongoose')
 const cors = require('cors')
 
-const config = require('./config')
+require('dotenv').config()
 
 // Use native Node promises
 mongoose.Promise = global.Promise
 mongoose
-  .connect(`mongodb://localhost/${config.DATABASE}`, { useMongoClient: true })
-  .then(() => console.log(`connection to ${config.DATABASE} succesful`))
+  .connect(`mongodb://localhost/${process.env.DATABASE}`, { useMongoClient: true })
+  .then(() => console.log(`connection to ${process.env.DATABASE} succesful`))
   .catch(err => console.error(err))
 
 // App Setup
@@ -31,7 +31,7 @@ app.use('/api/v1', routes)
 // app.use('/', authRoutes)
 
 // Server Setup
-const PORT = process.env.PORT || config.PORT
+const PORT = process.env.PORT || 3000
 const server = http.createServer(app)
 server.listen(PORT)
 console.log('Server listening on:', PORT)

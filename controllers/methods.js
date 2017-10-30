@@ -1,11 +1,10 @@
 const Yelp = require('node-yelp-api-v3')
-const config = require('../config')
 const yParser = require('./yParser')
 
-const {
-  CLIENT_ID: consumer_key,
-  CLIENT_SECRET: consumer_secret
-} = config.YELP_KEYS
+// eslint-disable-next-line
+const consumer_key = process.env.YELP_CLIENT_ID
+// eslint-disable-next-line
+const consumer_secret = process.env.YELP_CLIENT_SECRET
 
 const yelp = new Yelp({ consumer_key, consumer_secret })
 
