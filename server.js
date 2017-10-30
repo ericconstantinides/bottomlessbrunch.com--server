@@ -15,7 +15,7 @@ const DB_SRVR = process.env.DB_SERVER
 // Use native Node promises
 mongoose.Promise = global.Promise
 mongoose
-  .connect(`mongodb://${DB_USER}:${DB_PWD}@${DB_SRVR}/{DB}`, {
+  .connect(`mongodb://${DB_USER}:${DB_PWD}@${DB_SRVR}/${DB}`, {
     useMongoClient: true
   })
   .then(() => console.log(`connection to ${DB} succesful`))
