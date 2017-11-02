@@ -4,7 +4,6 @@ const router = express.Router()
 const venues = require('../controllers/venues')
 const regions = require('../controllers/regions')
 const methods = require('../controllers/methods')
-const pages = require('../controllers/pages')
 
 router.route('/regions').get(regions.region_list)
 router.route('/regions/:regionId').get(regions.region_detail)
@@ -12,8 +11,6 @@ router.route('/venues').get(venues.venue_list)
 router.route('/venues/:venueId').get(venues.venue_detail)
 
 router.route('/methods/environment').get(methods.environment)
-
-router.route('/sitemap').get(pages.sitemap)
 
 // admin routes:
 if (process.env.ENVIRONMENT === 'dev') {

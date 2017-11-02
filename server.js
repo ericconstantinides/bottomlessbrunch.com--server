@@ -5,6 +5,7 @@ const morgan = require('morgan')
 const app = express()
 const mongoose = require('mongoose')
 const cors = require('cors')
+const pages = require('./controllers/pages')
 
 require('dotenv').config()
 
@@ -30,6 +31,7 @@ const routes = require('./routes')
 
 // register the route
 app.use('/api/v1', routes)
+app.get('/api/sitemap.xml', pages.sitemap)
 // NOT YET:
 // app.use('/', authRoutes)
 
