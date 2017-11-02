@@ -31,7 +31,7 @@ const routes = require('./routes')
 
 // register the route
 app.use('/api/v1', routes)
-app.get('/api/sitemap.xml', pages.sitemap)
+app.get('/sitemap.xml', pages.sitemap)
 // NOT YET:
 // app.use('/', authRoutes)
 
