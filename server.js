@@ -6,8 +6,10 @@ const app = express()
 const mongoose = require('mongoose')
 const cors = require('cors')
 const pages = require('./controllers/pages')
+const path = require('path')
 
-require('dotenv').config()
+// allows starting the server from other directories:
+require('dotenv').config({path: path.join(__dirname, '.env')})
 
 const MONGODB_URI = process.env.ENVIRONMENT === 'prod'
   ? process.env.MONGODB_PROD_URI
