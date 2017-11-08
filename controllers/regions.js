@@ -1,9 +1,14 @@
 const Region = require('../models/Region')
+const slugify = require('../lib/myHelpers').slugify
 
 exports.region_list = function (req, res) {
-  Region.find({}, function (err, region) {
+  Region.find({}, function (err, regions) {
     if (err) res.send(err)
-    res.json(region)
+    const regionsWithSlug = regions.map(region => {
+      region.slug = slugify(region.name)
+      return region
+    })
+    res.json(regionsWithSlug)
   })
 }
 

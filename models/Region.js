@@ -9,7 +9,8 @@ const RegionSchema = new Schema({
   state: { type: String, enum: enumerables.states },
   zoom: { type: Number, min: 0 },
   lat: Number,
-  lng: Number
+  lng: Number,
+  slug: String
 })
 
 module.exports = mongoose.model('Region', RegionSchema)
