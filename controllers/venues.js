@@ -1,10 +1,19 @@
 const Venue = require('../models/Venue')
+const _ = require('lodash')
 
 exports.venue_list = function (req, res) {
-  Venue.find({}, function (err, venue) {
+  Venue.find({}, function (err, venues) {
     if (err) res.send(err)
-    res.json(venue)
+    // get the minimal data needed:
+    const minimalVenues = venues.map(venue => {
+      const { _id, lat, lng, regionId, slug } = venue
+      return { _id, lat, lng, regionId, slug }
+    })
+    res.json(minimalVenues)
   })
+  // const sf = venues.filter(venue => (
+  //   venue.regionId.toString() === '59c4a61488348f8102580f25'
+  // ))
 }
 
 exports.venue_create = function (req, res) {
@@ -18,7 +27,44 @@ exports.venue_create = function (req, res) {
 exports.venue_detail = function (req, res) {
   Venue.findById(req.params.venueId, function (err, venue) {
     if (err) res.send(err)
-    res.json(venue)
+    if (req.query.detailLevel && req.query.detailLevel === 'teaser') {
+      // still need to add first image:
+      const {
+        _id,
+        lat,
+        lng,
+        regionId,
+        slug,
+        name,
+        funItems,
+        funTimes,
+        address,
+        gData
+      } = venue
+      let thumbUrl
+      if (
+        gData &&
+        gData.images &&
+        gData.images.thumb &&
+        gData.images.thumb[0].url
+      ) {
+        thumbUrl = gData.images.thumb[0].url
+      }
+      res.json({
+        _id,
+        lat,
+        lng,
+        regionId,
+        slug,
+        name,
+        funItems,
+        funTimes,
+        address,
+        thumbUrl
+      })
+    } else {
+      res.json(venue)
+    }
   })
 }
 
