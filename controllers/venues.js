@@ -1,13 +1,21 @@
 const Venue = require('../models/Venue')
-const _ = require('lodash')
 
+// query parameters:
+// /venues[?showUnpublished]
 exports.venue_list = function (req, res) {
   Venue.find({}, function (err, venues) {
     if (err) res.send(err)
     // get the minimal data needed:
-    const minimalVenues = venues.map(venue => {
-      const { _id, lat, lng, regionId, slug } = venue
-      return { _id, lat, lng, regionId, slug }
+    let minimalVenues = []
+    venues.forEach(venue => {
+      const { _id, name, lat, lng, regionId, slug, unpublish } = venue
+      if (
+        (typeof req.query.showUnpublished !== 'undefined' &&
+          req.query.showUnpublished !== 'false') ||
+        !unpublish
+      ) {
+        minimalVenues.push({ _id, name, lat, lng, regionId, slug })
+      }
     })
     res.json(minimalVenues)
   })
@@ -24,23 +32,13 @@ exports.venue_create = function (req, res) {
   })
 }
 
+// query parameters:
+// /venues/{id}[?detailLevel=[teaser]]
 exports.venue_detail = function (req, res) {
   Venue.findById(req.params.venueId, function (err, venue) {
     if (err) res.send(err)
     if (req.query.detailLevel && req.query.detailLevel === 'teaser') {
-      // still need to add first image:
-      const {
-        _id,
-        lat,
-        lng,
-        regionId,
-        slug,
-        name,
-        funItems,
-        funTimes,
-        address,
-        gData
-      } = venue
+      const {_id, lat, lng, regionId, slug, name, funItems, funTimes, address, gData} = venue
       let thumbUrl
       if (
         gData &&
@@ -50,20 +48,18 @@ exports.venue_detail = function (req, res) {
       ) {
         thumbUrl = gData.images.thumb[0].url
       }
-      res.json({
-        _id,
-        lat,
-        lng,
-        regionId,
-        slug,
-        name,
-        funItems,
-        funTimes,
-        address,
-        thumbUrl
-      })
+      res.json({_id, lat, lng, regionId, slug, name, funItems, funTimes, address, thumbUrl})
     } else {
-      res.json(venue)
+      let thumbUrl
+      if (
+        venue.gData &&
+        venue.gData.images &&
+        venue.gData.images.thumb &&
+        venue.gData.images.thumb[0].url
+      ) {
+        thumbUrl = venue.gData.images.thumb[0].url
+      }
+      res.json({...venue.toObject(), thumbUrl})
     }
   })
 }
