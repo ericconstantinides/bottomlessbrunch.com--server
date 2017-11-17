@@ -8,13 +8,13 @@ exports.venue_list = function (req, res) {
     // get the minimal data needed:
     let minimalVenues = []
     venues.forEach(venue => {
-      const { _id, name, lat, lng, regionId, slug, unpublish } = venue
+      const { _id, gpId, lat, lng, regionId, slug, unpublish } = venue
       if (
         (typeof req.query.showUnpublished !== 'undefined' &&
           req.query.showUnpublished !== 'false') ||
         !unpublish
       ) {
-        minimalVenues.push({ _id, name, lat, lng, regionId, slug })
+        minimalVenues.push({ _id, gpId, lat, lng, regionId, slug })
       }
     })
     res.json(minimalVenues)
@@ -38,7 +38,7 @@ exports.venue_detail = function (req, res) {
   Venue.findById(req.params.venueId, function (err, venue) {
     if (err) res.send(err)
     if (req.query.detailLevel && req.query.detailLevel === 'teaser') {
-      const {_id, lat, lng, regionId, slug, name, funItems, funTimes, address, gData} = venue
+      const {_id, lat, lng, regionId, slug, name, gpId, funItems, funTimes, address, gData} = venue
       let thumbUrl
       if (
         gData &&
@@ -48,7 +48,7 @@ exports.venue_detail = function (req, res) {
       ) {
         thumbUrl = gData.images.thumb[0].url
       }
-      res.json({_id, lat, lng, regionId, slug, name, funItems, funTimes, address, thumbUrl})
+      res.json({_id, lat, lng, regionId, slug, name, gpId, funItems, funTimes, address, thumbUrl})
     } else {
       let thumbUrl
       if (
