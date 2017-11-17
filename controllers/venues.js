@@ -59,7 +59,7 @@ exports.venue_detail = function (req, res) {
       ) {
         thumbUrl = venue.gData.images.thumb[0].url
       }
-      res.json({...venue.toObject(), thumbUrl})
+      res.json(Object.assign({}, venue.toObject(), {thumbUrl}))
     }
   })
 }
