@@ -36,7 +36,11 @@ const VenueSchema = new Schema({
   }],
   funItems: [{
     name: String,
-    price: Number
+    price: Number,
+    // new from here:
+    drink: String,
+    includes: String,
+    remarks: String
   }],
   research: [{
     url: { type: String },

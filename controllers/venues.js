@@ -38,7 +38,19 @@ exports.venue_detail = function (req, res) {
   Venue.findById(req.params.venueId, function (err, venue) {
     if (err) res.send(err)
     if (req.query.detailLevel && req.query.detailLevel === 'teaser') {
-      const {_id, lat, lng, regionId, slug, name, gpId, funItems, funTimes, address, gData} = venue
+      const {
+        _id,
+        lat,
+        lng,
+        regionId,
+        slug,
+        name,
+        gpId,
+        funItems,
+        funTimes,
+        address,
+        gData
+      } = venue
       let thumbUrl
       if (
         gData &&
@@ -48,7 +60,19 @@ exports.venue_detail = function (req, res) {
       ) {
         thumbUrl = gData.images.thumb[0].url
       }
-      res.json({_id, lat, lng, regionId, slug, name, gpId, funItems, funTimes, address, thumbUrl})
+      res.json({
+        _id,
+        lat,
+        lng,
+        regionId,
+        slug,
+        name,
+        gpId,
+        funItems,
+        funTimes,
+        address,
+        thumbUrl
+      })
     } else {
       let thumbUrl
       if (
@@ -59,7 +83,7 @@ exports.venue_detail = function (req, res) {
       ) {
         thumbUrl = venue.gData.images.thumb[0].url
       }
-      res.json(Object.assign({}, venue.toObject(), {thumbUrl}))
+      res.json(Object.assign({}, venue.toObject(), { thumbUrl }))
     }
   })
 }
