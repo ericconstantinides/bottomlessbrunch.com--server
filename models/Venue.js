@@ -31,14 +31,14 @@ const VenueSchema = new Schema({
     category: { type: String, enum: enumerables.timeCategories },
     startTime: { type: String, enum: enumerables.times },
     endTime: { type: String, enum: enumerables.times },
-    days: [{ type: String, enum: enumerables.days }],
+    days: [ { type: String, enum: enumerables.days } ],
     remarks: String
   }],
   funItems: [{
     name: String,
     price: Number,
     // new from here:
-    drink: String,
+    drink: [ String ],
     includes: String,
     remarks: String
   }],

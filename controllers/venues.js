@@ -8,13 +8,13 @@ exports.venue_list = function (req, res) {
     // get the minimal data needed:
     let minimalVenues = []
     venues.forEach(venue => {
-      const { _id, gpId, lat, lng, regionId, slug, unpublish } = venue
+      const { _id, gpId, lat, lng, regionId, slug, unpublish, funItems, funTimes } = venue
       if (
         (typeof req.query.showUnpublished !== 'undefined' &&
           req.query.showUnpublished !== 'false') ||
         !unpublish
       ) {
-        minimalVenues.push({ _id, gpId, lat, lng, regionId, slug })
+        minimalVenues.push({ _id, gpId, lat, lng, regionId, slug, funItems, funTimes })
       }
     })
     res.json(minimalVenues)
